@@ -1,85 +1,136 @@
-const startButton = document.getElementById('start-btn')
-const nextButton = document.getElementById('next-btn')
-const questionContainerElement = document.getElementById('question-container')
-const questionElement = document.getElementById('question')
-const answerButtonsElement = document.getElementById('answer-buttons')
 
-let shuffledQuestions, currentQuestionIndex
+const startButton = document.getElementById('start-btn');
+const nextButton = document.getElementById('next-btn');
+const questionContainerElement = document.getElementById('question-container');
+const questionElement = document.getElementById('question');
+const answerButtonsElement = document.getElementById('answer-buttons');
+const countdownElement = document.querySelector(".countdown")
 
-startButton.addEventListener('click', startGame)
-nextButton.addEventListener('click', () => {
-  currentQuestionIndex++
-  setNextQuestion()
-})
+let shuffledQuestions ,currentQuestionIndex, countdown;
 
-function startGame() {
-  startButton.classList.add('hide')
-  shuffledQuestions = questions.sort(() => Math.random() - .5)
-  currentQuestionIndex = 0
-  questionContainerElement.classList.remove('hide')
-  setNextQuestion()
+
+startButton.addEventListener('click', startQuiz);
+
+
+
+
+nextButton.addEventListener('click', function() {
+  currentQuestionIndex++;
+  setNextQuestion();
+});
+
+
+
+function startQuiz() {
+  startButton.classList.add('hide');
+  questionContainerElement.classList.remove('hide');
+  shuffledQuestions = questions.sort(() => Math.random() - 0.5);
+  currentQuestionIndex = 0;
+  setNextQuestion();
+  startCountdown();
+}
+
+let secondsRemaining = 20;
+
+
+
+
+function startCountdown() {
+  
+  countdownElement.innerText = `Time remaining: ${secondsRemaining} seconds`;
+
+  countdown = setInterval(() => {
+    secondsRemaining--;
+    countdownElement.innerText = `Time remaining: ${secondsRemaining} seconds`;
+
+
+    if (secondsRemaining === 0) {
+      clearInterval(countdown);
+      alert('Time is up!'); // You can replace this with any other action you want
+      endQuiz();
+    }
+    
+      else (localStorage.setItem('secondsRemaining', JSON.stringify(secondsRemaining)));
+
+    
+    
+  }, 1000);
+}
+
+function endQuiz() {
+
+  
+
+  questionContainerElement.classList.add('hide');
+  startButton.innerText = 'Restart Quiz';
+  startButton.classList.remove('hide');
+  clearInterval(countdown);
+  
+  
 }
 
 function setNextQuestion() {
-  resetState()
-  showQuestion(shuffledQuestions[currentQuestionIndex])
+  resetState();
+  showQuestion(shuffledQuestions[currentQuestionIndex]);
 }
 
 function showQuestion(question) {
-  questionElement.innerText = question.question
+  questionElement.innerText = question.question;
   question.answers.forEach(answer => {
-    const button = document.createElement('button')
-    button.innerText = answer.text
-    button.classList.add('btn')
+    const button = document.createElement('button');
+    button.innerText = answer.text;
+    button.classList.add('btn');
     if (answer.correct) {
-      button.dataset.correct = answer.correct
+      button.dataset.correct = answer.correct;
     }
-    button.addEventListener('click', selectAnswer)
-    answerButtonsElement.appendChild(button)
-  })
+    
+    button.addEventListener('click', selectAnswer);
+
+    answerButtonsElement.appendChild(button);
+  });
 }
 
 function resetState() {
-  clearStatusClass(document.body)
-  nextButton.classList.add('hide')
+  clearStatusClass(document.body);
+  nextButton.classList.add('hide');
   while (answerButtonsElement.firstChild) {
-    answerButtonsElement.removeChild(answerButtonsElement.firstChild)
+    answerButtonsElement.removeChild(answerButtonsElement.firstChild);
   }
 }
 
 function selectAnswer(e) {
-  const selectedButton = e.target
-  const correct = selectedButton.dataset.correct
-  setStatusClass(document.body, correct)
+  const selectedButton = e.target;
+  const correct = selectedButton.dataset.correct;
+  setStatusClass(document.body, correct);
   Array.from(answerButtonsElement.children).forEach(button => {
-    setStatusClass(button, button.dataset.correct)
-  })
+    setStatusClass(button, button.dataset.correct);
+  });
+
   if (shuffledQuestions.length > currentQuestionIndex + 1) {
-    nextButton.classList.remove('hide')
+    nextButton.classList.remove('hide');
   } else {
-    startButton.innerText = 'Restart'
-    startButton.classList.remove('hide')
+    endQuiz();
   }
 }
 
 function setStatusClass(element, correct) {
-  clearStatusClass(element)
+  clearStatusClass(element);
   if (correct) {
-    element.classList.add('correct')
+    element.classList.add('correct');
   } else {
-    element.classList.add('wrong')
+    element.classList.add('wrong');
   }
 }
 
 function clearStatusClass(element) {
-  element.classList.remove('correct')
-  element.classList.remove('wrong')
+  element.classList.remove('correct');
+  element.classList.remove('wrong');
 }
 
 const questions = [
   {
     question: "What does NFL stand for?",
-     answers: [
+    answers: [
       { text: "North Face Local", correct: false},
       { text: "National Football League", correct: true},
       { text: "Negative Feedback Language", correct: false},
@@ -88,7 +139,7 @@ const questions = [
   },
   {
     question: "Who has the record for most points in NBA history?",
-     answers: [
+    answers: [
       { text: "Michael Jordan", correct: false},
       { text: "Kareem Abdul-Jabar", correct: false},
       { text: "Lebron James", correct: true},
@@ -97,7 +148,7 @@ const questions = [
   },
   {
     question: "How many points are touchdowns worth?",
-     answers: [
+    answers: [
       { text: "7", correct: false },
       { text: "6", correct: true },
       { text: "3", correct: false },
@@ -106,21 +157,20 @@ const questions = [
   },
   {
     question: "Shohei Otani just signed with the Dodgers for... ?",
-     answers: [
+    answers: [
       { text: "50 million", correct: false },
       { text: "700 million", correct: true },
       { text: "350 million", correct: false},
       { text: "100 million", correct: false}
     ]
   },
-    {
-      question: "What is a full count in baseball?",
+  {
+    question: "What is a full count in baseball?",
     answers: [
-     { text: "3 balls, 3 strikes", correct: false},
-     { text: "2 balls, 2 strikes", correct: false},
-     { text: "4 balls", correct: false},
-     { text: "3 balls, 2 strikes", correct: true}
+      { text: "3 balls, 3 strikes", correct: false},
+      { text: "2 balls, 2 strikes", correct: false},
+      { text: "4 balls", correct: false},
+      { text: "3 balls, 2 strikes", correct: true}
     ]
   }
-
-]
+];

@@ -9,9 +9,22 @@
   --hue-correct: 145;
 }
 
+.title{
+  color: darkslateblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: yellowgreen;
+  border-radius: 2px;
+  background-color: aliceblue;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-style: oblique;
+  font-size: 40px;
+
+}
 body {
   --hue: var(--hue-neutral);
-  padding: 0;
+  padding: 0; 
   margin: 0;
   display: flex;
   width: 100vw;
@@ -27,6 +40,13 @@ body.correct {
 
 body.wrong {
   --hue: var(--hue-wrong);
+}
+
+.countdown {
+  flex-direction: row-reverse;
+  justify-content: end;
+  background-color: antiquewhite;
+  text-emphasis-color: red;
 }
 
 .container {
