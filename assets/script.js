@@ -11,9 +11,6 @@ let shuffledQuestions ,currentQuestionIndex, countdown;
 
 startButton.addEventListener('click', startQuiz);
 
-
-
-
 nextButton.addEventListener('click', function() {
   currentQuestionIndex++;
   setNextQuestion();
@@ -31,9 +28,6 @@ function startQuiz() {
 }
 
 let secondsRemaining = 20;
-
-
-
 
 function startCountdown() {
   
@@ -65,6 +59,8 @@ function endQuiz() {
   startButton.innerText = 'Restart Quiz';
   startButton.classList.remove('hide');
   clearInterval(countdown);
+
+  startButton.addEventListener('click', secondsRemaining = 20 );
   
   
 }
