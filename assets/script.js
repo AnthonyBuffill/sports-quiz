@@ -33,27 +33,23 @@ function startCountdown() {
   
   countdownElement.innerText = `Time remaining: ${secondsRemaining} seconds`;
 
-  countdown = setInterval(() => {
+   countdown = setInterval(() => {
     secondsRemaining--;
     countdownElement.innerText = `Time remaining: ${secondsRemaining} seconds`;
 
 
     if (secondsRemaining === 0) {
       clearInterval(countdown);
-      alert('Time is up!'); // You can replace this with any other action you want
+      alert('Time is up!'); 
       endQuiz();
     }
     
       else (localStorage.setItem('secondsRemaining', JSON.stringify(secondsRemaining)));
 
-    
-    
-  }, 1000);
-}
+    }, 1000);
+  }
 
 function endQuiz() {
-
-  
 
   questionContainerElement.classList.add('hide');
   startButton.innerText = 'Restart Quiz';
@@ -133,6 +129,7 @@ const questions = [
       {text: "Not For Lease", correct: false}
     ]
   },
+ 
   {
     question: "Who has the record for most points in NBA history?",
     answers: [
@@ -142,6 +139,7 @@ const questions = [
       { text: "Jerry West", correct: false}
     ]
   },
+ 
   {
     question: "How many points are touchdowns worth?",
     answers: [
@@ -151,6 +149,7 @@ const questions = [
       { text: "1", correct: false }
     ]
   },
+ 
   {
     question: "Shohei Otani just signed with the Dodgers for... ?",
     answers: [
@@ -160,6 +159,7 @@ const questions = [
       { text: "100 million", correct: false}
     ]
   },
+ 
   {
     question: "What is a full count in baseball?",
     answers: [
