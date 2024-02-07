@@ -3,7 +3,7 @@
 
 # sports-quiz
 This is a timed quiz based on sports trivia
-
+deployed page:   https://anthonybuffill.github.io/sports-quiz/
 For this task, I took the liberty of adding many css characteristics that I pushed myself to learn through web documents in order
 to make for better user interaction to make for a better user experience.
 
